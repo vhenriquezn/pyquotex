@@ -39,7 +39,7 @@ class Buy(Base):
             "time": expiration,
             "action": direction,
             "isDemo": self.api.account_type,
-            "tournamentId": 0,
+            "tournamentId": self.api.tournament_id,
             "requestId": request_id,
             "optionType": option_type
         }
@@ -48,5 +48,5 @@ class Buy(Base):
         self.send_websocket_request(data)
 
         data = f'42["orders/open",{json.dumps(payload)}]'
-        print(data)
+        #print(data)
         self.send_websocket_request(data)

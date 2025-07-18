@@ -254,9 +254,9 @@ class Quotex:
             logger.error("ERROR doesn't have this mode")
             exit(1)
 
-    async def change_account(self, balance_mode: str):
+    def change_account(self, balance_mode: str):
         """Change active account `real` or `practice`"""
-        self.account_is_demo = 0 if balance_mode.upper() == "REAL" else 1
+        self.account_is_demo = 0 if balance_mode.upper() == "REAL" else 1 if balance_mode.upper() == "PRACTICE" else 2
         self.api.change_account(self.account_is_demo)
 
     def change_time_offset(self, time_offset):
@@ -273,7 +273,8 @@ class Quotex:
         while self.api.account_balance is None:
             await asyncio.sleep(0.2)
         balance = self.api.account_balance.get("demoBalance") \
-            if self.api.account_type > 0 else self.api.account_balance.get("liveBalance")
+            if self.api.account_type == 1 else self.api.account_balance.get("liveBalance") \
+            if self.api.account_type == 0 else self.api.account_balance.get("tournamentsBalances", {}).get(str(self.api.tournament_id))
         return float(f"{truncate(balance + self.get_profit(), 2):.2f}")
 
     # Agregar al archivo stable_api.py dentro de la clase Quotex
@@ -602,20 +603,6 @@ class Quotex:
         return await self.api.get_trader_history(account_type, page_number=1)
 
     async def buy(self, amount: float, asset: str, direction: str, duration: int, time_mode: str = "TIME"):
-        """
-        Buy Binary option
-
-        Args:
-            amount (float): Amount to buy.
-            asset (str): Asset to buy.
-            direction (str): Direction to buy.
-            duration (int): Duration to buy.
-            time_mode (str): Time mode to buy.
-
-        Returns:
-            The buy result.
-
-        """
         self.api.buy_id = None
         request_id = expiration.get_timestamp()
         is_fast_option = time_mode.upper() == "TIME"
@@ -671,6 +658,20 @@ class Quotex:
             await asyncio.sleep(0.2)
         return self.api.sold_options_respond
 
+
+    async def check_asset_open_v2(self):
+        """
+        Retorna:
+        - Tupla con (ID, nombre, estado_apertura)
+        - estado_apertura es booleano (True si está abierto)
+        """
+        all_instruments = await self.get_instruments()
+        instruments = {}
+        for i in all_instruments:
+            instruments[i[1]] = {"profit":i[-9], "is_open":i[14], "name":i[2].replace("\n", "")}
+        
+        return instruments
+
     def get_payment(self):
         """Payment Quotex server"""
         assets_data = {}
@@ -711,19 +712,21 @@ class Quotex:
 
         return data.get("profit").get(f"{timeframe}M")
 
-    async def start_remaing_time(self):
+    async def start_remaing_time(self, message):
         now_stamp = datetime.fromtimestamp(expiration.get_timestamp())
         expiration_stamp = datetime.fromtimestamp(self.api.timesync.server_timestamp)
         remaing_time = int((expiration_stamp - now_stamp).total_seconds())
-        while remaing_time >= 0:
+        while remaing_time > 0:
             remaing_time -= 1
-            print(f"\rRemaining {remaing_time if remaing_time > 0 else 0} seconds...", end="")
+            print(f"\r{message}{remaing_time} segundos...⏳", end=f"{"\n" if remaing_time == 0 else ""}")
             await asyncio.sleep(1)
 
-    async def check_win(self, id_number: int):
+            
+
+    async def check_win(self, id_number: int, message):
         """Check win based id"""
         task = asyncio.create_task(
-            self.start_remaing_time()
+            self.start_remaing_time(message)
         )
         while True:
             data_dict = self.api.listinfodata.get(id_number)

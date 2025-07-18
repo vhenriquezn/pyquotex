@@ -63,6 +63,7 @@ class QuotexAPI(object):
     pending_successful = None
     account_balance = None
     account_type = None
+    tournament_id = 0
     instruments = None
     training_balance_edit_request = None
     profit_in_operation = None
