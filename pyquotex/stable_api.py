@@ -744,7 +744,8 @@ class Quotex:
                 break
             await asyncio.sleep(1)
         self.api.listinfodata.delete(id_number)
-        return data_dict["win"]
+        print(data_dict)
+        return data_dict["win"], 0
 
     def start_candles_stream(self, asset: str = "EURUSD", period: int = 0):
         """Start streaming candle data for a specified asset.
