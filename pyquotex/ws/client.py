@@ -94,7 +94,6 @@ class WebsocketClient(object):
                     elif message.get("ticket") and not message.get("id"):
                         self.api.sold_options_respond = message
                     elif message.get("deals"):
-                        print(message)
                         for get_m in message["deals"]:
                             self.api.profit_in_operation = get_m["profit"]
                             get_m["win"] = True if message["profit"] > 0 else False
