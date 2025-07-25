@@ -64,6 +64,7 @@ class WebsocketClient(object):
                 if isinstance(message, dict):
                     for clave, valor in message.items():
                         print(f"{clave}: {valor}")
+                    print("\n\n\n\n")
                     if message.get("signals"):
                         time_in = message.get("time")
                         for i in message["signals"]:
