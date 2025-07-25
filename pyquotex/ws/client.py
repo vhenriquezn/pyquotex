@@ -39,6 +39,7 @@ class WebsocketClient(object):
 
     def on_message(self, wss, message):
         """Method to process websocket messages."""
+        print(message)
         global_value.ssl_Mutual_exclusion = True
         current_time = time.localtime()
         if current_time.tm_sec in [0, 5, 10, 15, 20, 30, 40, 50]:
