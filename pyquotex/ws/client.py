@@ -62,9 +62,6 @@ class WebsocketClient(object):
                 if "call" in str(message) or 'put' in str(message):
                     self.api.instruments = message
                 if isinstance(message, dict):
-                    for clave, valor in message.items():
-                        print(f"{clave}: {valor}")
-                    print("\n\n\n\n")
                     if message.get("signals"):
                         time_in = message.get("time")
                         for i in message["signals"]:
