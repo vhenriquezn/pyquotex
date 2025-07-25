@@ -740,8 +740,9 @@ class Quotex:
     async def check_winv2(self, id_number: int):
         while True:
             data_dict = self.api.listinfodata.get(id_number)
-            for clave, valor in data_dict.items():
-                print(f"{clave}: {valor}")
+            if data_dict:
+                for clave, valor in data_dict.items():
+                    print(f"{clave}: {valor}")
             if data_dict and data_dict.get("game_state") == 1:
                 break
             await asyncio.sleep(1)
