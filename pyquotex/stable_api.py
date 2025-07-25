@@ -276,7 +276,7 @@ class Quotex:
             await asyncio.sleep(0.2)
         balance = self.api.account_balance.get("demoBalance") \
             if self.api.account_type == 1 else self.api.account_balance.get("liveBalance") \
-            if self.api.account_type == 0 else self.api.account_balance.get("tournamentsBalances", {}).get(str(self.api.tournament_id))
+            if self.api.tournament_id == 0 else self.api.account_balance.get("tournamentsBalances", {}).get(str(self.api.tournament_id))
         return float(f"{truncate(balance + self.get_profit(), 2):.2f}")
 
     # Agregar al archivo stable_api.py dentro de la clase Quotex
