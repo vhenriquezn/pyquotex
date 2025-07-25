@@ -11,7 +11,7 @@ class ListInfoData(Base):
         self.__name = "listInfoData"
         self.listinfodata_dict = {}
 
-    def set(self, win, game_state, id_number):
+    def set(self, win, game_state, id_number, lo):
         self.listinfodata_dict[id_number] = {
             "win": win,
             "game_state": game_state
