@@ -213,7 +213,7 @@ class QuotexAPI(object):
         self.account_type = account_type
         payload = {
             "demo": self.account_type,
-            "tournamentId": 0
+            "tournamentId": self.tournament_id
         }
         data = f'42["account/change",{json.dumps(payload)}]'
         self.send_websocket_request(data)
