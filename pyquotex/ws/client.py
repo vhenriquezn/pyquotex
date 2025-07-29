@@ -101,7 +101,7 @@ class WebsocketClient(object):
                             get_m["result"] = "WIN" if message["profit"] > 0 else "DRAW" if message["profit"] == 0 else "LOSS"
                             get_m["game_state"] = 1
                             self.api.listinfodata.set(
-                                get_m["win"],
+                                get_m["result"],
                                 get_m["game_state"],
                                 get_m["id"],
                                 get_m["percent_profit"]
