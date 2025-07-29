@@ -742,7 +742,6 @@ class Quotex:
         while True:
             data_dict = self.api.listinfodata.get(id_number)
             if data_dict and data_dict.get("game_state") == 1:
-                print(data_dict)
                 break
             await asyncio.sleep(1)
         self.api.listinfodata.delete(id_number)
