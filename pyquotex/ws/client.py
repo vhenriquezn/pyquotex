@@ -94,7 +94,7 @@ class WebsocketClient(object):
                     elif message.get("ticket") and not message.get("id"):
                         self.api.sold_options_respond = message
                     elif message.get("deals"):
-                        print(message.get("deals"))
+                        #print(message.get("deals"))
                         #print(f"msg: {message}\n\n\n")
                         for get_m in message["deals"]:
                             self.api.profit_in_operation = get_m["profit"]
@@ -105,7 +105,6 @@ class WebsocketClient(object):
                                 get_m["game_state"],
                                 get_m["percentProfit"],
                                 get_m["id"]
-                                
                             )
                     elif message.get("isDemo") and message.get("balance"):
                         self.api.training_balance_edit_request = message
