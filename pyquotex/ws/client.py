@@ -103,7 +103,8 @@ class WebsocketClient(object):
                             self.api.listinfodata.set(
                                 get_m["win"],
                                 get_m["game_state"],
-                                get_m["id"]
+                                get_m["id"],
+                                get_m["percent_profit"]
                             )
                     elif message.get("isDemo") and message.get("balance"):
                         self.api.training_balance_edit_request = message
