@@ -256,8 +256,7 @@ class Quotex:
 
     def change_account(self, balance_mode: str):
         """Change active account `real` or `practice`"""
-        #self.account_is_demo = 0 if balance_mode.upper() == "REAL" else 1 if balance_mode.upper() == "PRACTICE" else 2
-        self.account_is_demo = 1 if balance_mode.upper() ==  "DEMO" else 0
+        self.account_is_demo = 0 if balance_mode.upper() == "REAL" else 1
         
         self.api.change_account(self.account_is_demo)
 
