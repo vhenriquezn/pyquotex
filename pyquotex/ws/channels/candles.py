@@ -24,4 +24,5 @@ class GetCandles(Base):
             "period": period
         }
         data = f'42["history/load",{json.dumps(payload)}]'
+        print(data)
         self.send_websocket_request(data)
