@@ -159,7 +159,7 @@ class Quotex:
             end_from_time = time.time()
         index = expiration.get_timestamp()
         self.api.candles.candles_data = None
-        #self.start_candles_stream(asset, period)
+        self.start_candles_stream(asset, period)
         self.api.get_candles(asset, index, end_from_time, offset, period)
         while True:
             while self.check_connect and self.api.candles.candles_data is None:
