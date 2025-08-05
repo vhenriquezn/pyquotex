@@ -213,7 +213,7 @@ class QuotexAPI(object):
         self.account_type = account_type
         payload = {
             "demo": self.account_type,
-            "tournamentId": 0
+            "tournamentId": self.tournament_id
         }
         data = f'42["account/change",{json.dumps(payload)}]'
         self.send_websocket_request(data)
@@ -238,7 +238,7 @@ class QuotexAPI(object):
             "amount": amount
         }
         data = f'42["pending/create",{json.dumps(payload)}]'
-        print(data)
+        #print(data)
         # 42["pending/create",{"openType":0,"asset":"AUDCAD_otc","openTime":"2025-04-01T20:09:00.000Z","timeframe":60,"command":"call","amount":50}]
         # 42["pending/create",{"openType":0,"asset":"EURUSD_otc","openTime":"2025-04-01T20:11:00.000Z","timeframe":60,"command":"call","amount":5}]
         self.send_websocket_request(data)
