@@ -746,7 +746,7 @@ class Quotex:
             data_dict = self.api.listinfodata.get(id_number)
             if data_dict and data_dict.get("game_state") == 1:
                 break
-            await asyncio.sleep(1)
+            #await asyncio.sleep(1)
         self.api.listinfodata.delete(id_number)
         return data_dict["percent_profit"], self.api.profit_in_operation or 0
 
