@@ -197,7 +197,7 @@ class Quotex:
         candles = self.prepare_candles(asset, period)
 
         if cantidad:
-            return candles[-cantidad]
+            return candles[-cantidad:]
         return candles
 
     def prepare_candles(self, asset: str, period: int):
