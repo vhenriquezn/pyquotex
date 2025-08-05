@@ -135,9 +135,7 @@ def calculate_candles(history, period):
             'low': low_price,
             'ticks': num_ticks
         }
-        print(candle)
         candles.append(candle)
-    #print(candles)
     candles = candles[:-1]
 
     return candles
