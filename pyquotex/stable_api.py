@@ -256,7 +256,8 @@ class Quotex:
 
     def change_account(self, balance_mode: str):
         """Change active account `real` or `practice`"""
-        self.account_is_demo = 0 if balance_mode.upper() == "REAL" else 1 if balance_mode.upper() == "PRACTICE" else 2
+        self.account_is_demo = 1 if balance_mode.upper() == "DEMO" else 0
+        
         self.api.change_account(self.account_is_demo)
 
     def change_time_offset(self, time_offset):
@@ -274,7 +275,7 @@ class Quotex:
             await asyncio.sleep(0.2)
         balance = self.api.account_balance.get("demoBalance") \
             if self.api.account_type == 1 else self.api.account_balance.get("liveBalance") \
-            if self.api.account_type == 0 else self.api.account_balance.get("tournamentsBalances", {}).get(str(self.api.tournament_id))
+            if self.api.tournament_id == 0 else self.api.account_balance.get("tournamentsBalances", {}).get(str(self.api.tournament_id))
         return float(f"{truncate(balance + self.get_profit(), 2):.2f}")
 
     # Agregar al archivo stable_api.py dentro de la clase Quotex
@@ -744,7 +745,7 @@ class Quotex:
                 break
             await asyncio.sleep(1)
         self.api.listinfodata.delete(id_number)
-        return data_dict["win"], self.api.profit_in_operation or 0
+        return data_dict["percent_profit"], self.api.profit_in_operation or 0
 
     def start_candles_stream(self, asset: str = "EURUSD", period: int = 0):
         """Start streaming candle data for a specified asset.
