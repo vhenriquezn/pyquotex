@@ -136,8 +136,8 @@ def calculate_candles(history, period):
             'ticks': num_ticks
         }
         candles.append(candle)
-    candles = candles[:-1]
-
+    #candles = candles[:-1]
+    
     return candles
 
 
