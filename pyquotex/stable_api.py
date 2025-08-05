@@ -189,12 +189,15 @@ class Quotex:
                 break
         return self.api.historical_candles
 
-    async def get_candle_v2(self, asset, period):
+    async def get_candle_v2(self, asset, period, cantidad=None):
         self.api.candle_v2_data[asset] = None
         self.start_candles_stream(asset, period)
         while self.api.candle_v2_data[asset] is None:
             await asyncio.sleep(0.2)
         candles = self.prepare_candles(asset, period)
+
+        if cantidad:
+            return candles[-cantidad]
         return candles
 
     def prepare_candles(self, asset: str, period: int):
