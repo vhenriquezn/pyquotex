@@ -216,6 +216,7 @@ class QuotexAPI(object):
             "tournamentId": self.tournament_id
         }
         data = f'42["account/change",{json.dumps(payload)}]'
+        print(data)
         self.send_websocket_request(data)
 
     def get_history_line(self, asset_id, index, end_from_time, offset):
